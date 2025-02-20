@@ -203,7 +203,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 child: Column(
                                   children: [
                                     Text(
-                                      '${hourlyForecast.time?.split(' ')[1]}', 
+                                      '${hourlyForecast.time?.split(' ')[1]}',
                                       style: TextStyle(
                                           fontSize: 20,
                                           color: Colors.white,
@@ -313,23 +313,29 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget weatherCard(IconData icon, String title, String value) {
     return Container(
+      width: 150, // Tamaño fijo para evitar cambios en diferentes dispositivos
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.3),
         borderRadius: BorderRadius.circular(15),
       ),
       padding: EdgeInsets.all(13),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize:
+            MainAxisSize.min, // Evita que el widget se expanda demasiado
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(icon, color: Colors.white, size: 35),
           SizedBox(height: 8),
-          Text(title, style: TextStyle(color: Colors.white70, fontSize: 18)),
+          Text(title,
+              style: TextStyle(color: Colors.white70, fontSize: 16),
+              textAlign: TextAlign.center),
           SizedBox(height: 8),
           Text(value,
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold)),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center),
         ],
       ),
     );
