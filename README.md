@@ -1,6 +1,3 @@
-Aquí tienes una descripción profesional para tu repositorio de GitHub:  
-
----
 
 # 🌤️ Weather App - Pronóstico del Clima ☁️🌧️  
 
