@@ -41,10 +41,3 @@ Aplicación móvil desarrollada en **Flutter** que proporciona pronósticos mete
 ## 📌 Notas  
 - Para usar la funcionalidad de geolocalización, asegúrate de haber concedido permisos en tu dispositivo.  
 - Puedes obtener una API Key gratuita en [WeatherAPI](https://www.weatherapi.com/).  
-
-## 📜 Licencia  
-Este proyecto está bajo la licencia MIT.  
-
----
-
-Si quieres personalizar algún detalle, dime y lo ajusto. 😊
