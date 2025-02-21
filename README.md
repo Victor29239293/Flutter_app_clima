@@ -1,16 +1,43 @@
-# flutter_app_clima
 
-A new Flutter project.
+# 🌤️ Weather App - Pronóstico del Clima ☁️🌧️  
 
-## Getting Started
+Aplicación móvil desarrollada en **Flutter** que proporciona pronósticos meteorológicos en tiempo real utilizando la **Weather API**. Con una interfaz intuitiva y moderna, permite a los usuarios consultar el clima actual y el pronóstico de los próximos días en cualquier ciudad del mundo.  
 
-This project is a starting point for a Flutter application.
+## 🚀 Características  
+- 📍 **Búsqueda por ubicación**: Consulta el clima de cualquier ciudad ingresando su nombre.  
+- 📡 **Detección automática**: Obtén el pronóstico basado en tu ubicación actual.  
+- ⏳ **Pronóstico extendido**: Información detallada para los próximos días.  
+- 🌡️ **Datos meteorológicos precisos**: Temperatura, humedad, velocidad del viento, sensación térmica y más.  
+- 🎨 **Diseño atractivo y responsivo**: UI optimizada para una mejor experiencia de usuario.  
 
-A few resources to get you started if this is your first Flutter project:
+## 🛠️ Tecnologías utilizadas  
+- **Flutter** (Dart)  
+- **Weather API** (para obtener los datos del clima)  
+- **Provider / Riverpod** (gestión de estado, si aplica)  
+- **Geolocator** (para obtener la ubicación del usuario, si aplica)  
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 📷 Capturas de pantalla  
+*(Incluye aquí algunas imágenes de la app en funcionamiento para hacerla más atractiva)*  
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📦 Instalación  
+1. Clona el repositorio:  
+   ```bash
+   git clone https://github.com/tuusuario/weather-app-flutter.git
+   ```  
+2. Entra en el directorio del proyecto:  
+   ```bash
+   cd weather-app-flutter
+   ```  
+3. Instala las dependencias:  
+   ```bash
+   flutter pub get
+   ```  
+4. Agrega tu clave de **Weather API** en el archivo de configuración.  
+5. Ejecuta la aplicación:  
+   ```bash
+   flutter run
+   ```  
+
+## 📌 Notas  
+- Para usar la funcionalidad de geolocalización, asegúrate de haber concedido permisos en tu dispositivo.  
+- Puedes obtener una API Key gratuita en [WeatherAPI](https://www.weatherapi.com/).  
