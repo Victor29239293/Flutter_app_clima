@@ -16,9 +16,6 @@ Aplicación móvil desarrollada en **Flutter** que proporciona pronósticos mete
 - **Provider / Riverpod** (gestión de estado, si aplica)  
 - **Geolocator** (para obtener la ubicación del usuario, si aplica)  
 
-## 📷 Capturas de pantalla  
-*(Incluye aquí algunas imágenes de la app en funcionamiento para hacerla más atractiva)*  
-
 ## 📦 Instalación  
 1. Clona el repositorio:  
    ```bash
