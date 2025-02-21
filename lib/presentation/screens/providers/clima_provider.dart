@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_clima/config/constants/environment.dart';
 import 'package:flutter_app_clima/infrastructure/models/OpenWheather/City.dart';
 import 'package:flutter_app_clima/infrastructure/models/OpenWheather/WeatherOfTheDay.dart';
 import 'package:geolocator/geolocator.dart';
@@ -9,7 +10,7 @@ class ClimaService extends ChangeNotifier {
     BaseOptions(
       baseUrl: 'https://api.weatherapi.com/v1',
       queryParameters: {
-        'key': '550c884eb5b840bf88d51709251802',
+        'key': Environment.theWeatherApi,
         'lang': 'es',
       },
     ),

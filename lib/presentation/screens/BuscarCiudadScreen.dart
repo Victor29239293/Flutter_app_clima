@@ -4,7 +4,6 @@ import 'package:flutter_app_clima/infrastructure/models/OpenWheather/City.dart';
 import 'package:flutter_app_clima/presentation/screens/providers/consumir_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 class BuscarCiudadScreen extends ConsumerStatefulWidget {
   const BuscarCiudadScreen({super.key});
 
@@ -25,19 +24,19 @@ class _BuscarCiudadScreenState extends ConsumerState<BuscarCiudadScreen> {
   }
 
   Future<void> _obtenerClimaPorUbicacion() async {
-  climaFuture = ref.read(climaProvider.notifier).obtenerClimaPorUbicacion();
-  final clima = await climaFuture;
-  if (clima != null) {
-    setState(() {
-      ciudadActual = City(
-        name: clima.location.name,
-        country: clima.location.country,
-        latitude: clima.location.lat,
-        longitude: clima.location.lon,
-      );
-    });
+    climaFuture = ref.read(climaProvider.notifier).obtenerClimaPorUbicacion();
+    final clima = await climaFuture;
+    if (clima != null) {
+      setState(() {
+        ciudadActual = City(
+          name: clima.location.name,
+          country: clima.location.country,
+          latitude: clima.location.lat,
+          longitude: clima.location.lon,
+        );
+      });
+    }
   }
-}
 
   void _buscarCiudad(String ciudad) {
     setState(() {
@@ -85,13 +84,14 @@ class _BuscarCiudadScreenState extends ConsumerState<BuscarCiudadScreen> {
                 SizedBox(height: 10),
                 Expanded(
                   child: FutureBuilder<List<City>>(
-                    future: _buscarCiudadesSimilares(_cityController.text),
+                    future: _cityController.text.isEmpty
+                        ? null
+                        : _buscarCiudadesSimilares(_cityController.text),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(child: CircularProgressIndicator());
                       } else if (snapshot.hasError) {
-                        return Center(
-                            child: Text('Error al buscar ciudades.'));
+                        return Center(child: Text('Error al buscar ciudades.'));
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return Center(
                             child: Text('No se encontraron ciudades.'));
@@ -121,7 +121,8 @@ class _BuscarCiudadScreenState extends ConsumerState<BuscarCiudadScreen> {
       },
     );
   }
-   @override
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -245,5 +246,4 @@ class _BuscarCiudadScreenState extends ConsumerState<BuscarCiudadScreen> {
       ),
     );
   }
-
 }

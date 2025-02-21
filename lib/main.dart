@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app_clima/presentation/screens/home_screens.dart';
 
-void main() async {
- 
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Asegurar inicialización
+  await dotenv.load(fileName: ".env"); // Cargar el archivo .env
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -19,6 +22,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const HomeScreen(),
-    ); 
+    );        
   }
 }

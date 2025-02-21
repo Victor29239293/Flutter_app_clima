@@ -13,6 +13,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   Future<WeatherOfTheDay?>? climaFuture;
+  
 
   @override
   void initState() {
@@ -313,7 +314,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget weatherCard(IconData icon, String title, String value) {
     return Container(
-      width: 150, // Tamaño fijo para evitar cambios en diferentes dispositivos
+      width: 150, 
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.3),
         borderRadius: BorderRadius.circular(15),
