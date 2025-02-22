@@ -13,7 +13,6 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   Future<WeatherOfTheDay?>? climaFuture;
-  
 
   @override
   void initState() {
@@ -29,7 +28,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String currentHour = DateTime.now().hour.toString().padLeft(2, '0');
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 600;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF0F2027),
@@ -40,7 +41,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 icon: Icon(
                   Icons.file_copy,
                   color: Colors.white,
-                  size: 30,
+                  size: isSmallScreen ? 24 : 30,
                 ),
                 onPressed: () {
                   Navigator.push(
@@ -51,15 +52,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 },
               ),
               IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.more_vert, color: Colors.white))
+                onPressed: () {},
+                icon: Icon(Icons.more_vert, color: Colors.white),
+              )
             ],
           )
         ],
       ),
       body: Stack(
         children: [
-          // Fondo con imagen o gradiente
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -96,95 +97,73 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 final climaData = snapshot.data!;
                 final location = climaData.location;
                 final current = climaData.current;
+                final currentHour = DateTime.now().hour.toString();
+
                 return ListView(
                   physics: const AlwaysScrollableScrollPhysics(),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: isSmallScreen ? 10 : 20),
                   children: [
-                    const SizedBox(height: 50),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              ' ${location.name} , ',
-                              style: const TextStyle(
-                                  fontSize: 28,
+                    SizedBox(height: isSmallScreen ? 30 : 50),
+                    Center(
+                      child: Column(
+                        children: [
+                          Text(
+                            '${location.name},',
+                            style: TextStyle(
+                              fontSize: 28,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(Icons.location_on, color: Colors.red),
+                              SizedBox(width: 5),
+                              Text(
+                                location.country,
+                                style: TextStyle(
+                                  fontSize: 24,
                                   color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                Text(
-                                  ' ${location.country}',
-                                  style: const TextStyle(
-                                      fontSize: 28,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                const Icon(Icons.location_on,
-                                    color: Colors.white),
-                              ],
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Image.network('https:${current.condition.icon}',
-                        width: 100, height: 100),
-                    Text(
-                      "${current.tempC} °C",
-                      style: const TextStyle(
-                          fontSize: 60,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      "Sensación térmica:  °C",
-                      style:
-                          const TextStyle(fontSize: 18, color: Colors.white70),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 30),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18),
-                          color: Colors.black.withOpacity(0.3),
-                        ),
-                        padding: const EdgeInsets.all(15),
-                        child: Row(
-                          children: [
-                            Icon(Icons.cloud, color: Colors.white),
-                            const SizedBox(width: 10),
-                            const Text(
-                              "Pronóstico del Clima",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+                          
+                        ],
                       ),
                     ),
-                    SizedBox(
-                      height: 20,
+                    SizedBox(height: 10),
+                    Center(
+                      child: Image.network('https:${current.condition.icon}',
+                          width: 100, height: 100),
                     ),
+                    Text(
+                      "${current.tempC} °C",
+                      style: TextStyle(
+                        fontSize: 60,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 30),
                     Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 13),
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18),
-                          color: Colors.black.withOpacity(0.3),
+                          color: Colors.white.withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.transparent.withOpacity(0.1),
+                              blurRadius: 8,
+                              offset: Offset(2, 4),
+                            ),
+                          ],
                         ),
                         padding: const EdgeInsets.all(15),
                         child: SingleChildScrollView(
@@ -212,7 +191,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     ),
                                     SizedBox(height: 8),
                                     Image.network(
-                                        'https:${hourlyForecast.condition.icon}'),
+                                        'https:${hourlyForecast.condition.icon}',
+                                        width: 50,
+                                        height: 50),
                                     SizedBox(height: 8),
                                     Text(
                                       '${hourlyForecast.tempC}°',
@@ -229,79 +210,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 25,
+                    SizedBox(height: 30),
+                    GridView.count(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      crossAxisCount: isSmallScreen ? 2 : 3,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 1.2,
+                      children: [
+                        weatherCard(Icons.water_drop, "Humedad",
+                            "${current.humidity}%", isSmallScreen),
+                        weatherCard(Icons.air, "Viento",
+                            "${current.windKph} km/h", isSmallScreen),
+                        weatherCard(Icons.thermostat, "Sensación térmica",
+                            "${current.feelslikeC}°C", isSmallScreen),
+                        weatherCard(Icons.compress, "Presión",
+                            "${current.pressureMb} hPa", isSmallScreen),
+                        weatherCard(Icons.visibility, "Visibilidad",
+                            "${current.visKm} km", isSmallScreen),
+                        weatherCard(Icons.wb_sunny, "Índice UV",
+                            "${current.uv}", isSmallScreen),
+                      ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20),
-                      child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.black.withOpacity(0.3),
-                          ),
-                          padding: EdgeInsets.all(25),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Prevision de tormentas durante 6 horas',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          )),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Detalle de Clima',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: GridView(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, // 2 columnas
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 1.6,
-                        ),
-                        children: [
-                          weatherCard(Icons.thermostat, 'Temperatura aparente',
-                              '${current.tempC} °C'),
-                          weatherCard(
-                              Icons.air, 'Viento', '${current.windKph} Km/h'),
-                          weatherCard(Icons.water_drop, 'Humedad',
-                              '${current.humidity} %'),
-                          weatherCard(
-                              Icons.wb_sunny, 'Índice UV', '${current.uv}'),
-                          weatherCard(Icons.visibility, 'Visibilidad',
-                              '${current.visKm} km'),
-                          weatherCard(Icons.compress, 'Presión del aire',
-                              '${current.pressureMb} hPa'),
-                        ],
-                      ),
-                    )
+                    SizedBox(height: 30),
                   ],
                 );
               },
@@ -312,31 +244,45 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget weatherCard(IconData icon, String title, String value) {
+  Widget weatherCard(
+      IconData icon, String title, String value, bool isSmallScreen) {
     return Container(
-      width: 150, 
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.3),
-        borderRadius: BorderRadius.circular(15),
+        color: Colors.white.withOpacity(0.15),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.transparent.withOpacity(0.1),
+            blurRadius: 8,
+            offset: Offset(2, 4),
+          ),
+        ],
       ),
-      padding: EdgeInsets.all(13),
+      padding: EdgeInsets.all(isSmallScreen ? 12 : 18),
       child: Column(
-        mainAxisSize:
-            MainAxisSize.min, // Evita que el widget se expanda demasiado
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, color: Colors.white, size: 35),
+          Icon(icon, color: Colors.white, size: isSmallScreen ? 26 : 38),
           SizedBox(height: 8),
-          Text(title,
-              style: TextStyle(color: Colors.white70, fontSize: 16),
-              textAlign: TextAlign.center),
+          Text(
+            title,
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: isSmallScreen ? 14 : 16,
+              fontWeight: FontWeight.w600,
+            ),
+            textAlign: TextAlign.center,
+          ),
           SizedBox(height: 8),
-          Text(value,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center),
+          Text(
+            value,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: isSmallScreen ? 16 : 18,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
         ],
       ),
     );
